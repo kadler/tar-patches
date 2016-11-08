@@ -1,0 +1,14 @@
+--- a/src/unlink.c	2016-09-01 18:22:16 -0500
++++ b/src/unlink.c	2016-09-01 18:23:20 -0500
+@@ -124,9 +124,11 @@
+ 		    case ENOENT:
+ 		      /* nothing to worry about */
+ 		      break;
++#ifndef _AIX /* AIX EEXIST and ENOTEMPTY the same, causing compile failure */
+ 		    case EEXIST:
+ 		      /* OpenSolaris >=10 sets EEXIST instead of ENOTEMPTY
+ 			 if trying to remove a non-empty directory */
++#endif
+ 		    case ENOTEMPTY:
+ 		      /* Keep the record in list, in the hope we'll
+ 			 be able to remove it later */
